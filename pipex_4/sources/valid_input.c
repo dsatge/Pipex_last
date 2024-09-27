@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:50:40 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/26 23:44:34 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/27 18:41:27 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	env_check(char **argv, t_pipe *pipex)
 	}
 	if (err == 1)
 		exit(EXIT_FAILURE);
+	pipex->absolut_path = 0;
 	pipex->env = NULL;
 }
 

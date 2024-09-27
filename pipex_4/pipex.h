@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:51:26 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/26 23:24:52 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/27 18:38:33 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_pipe
 	int		line_path;
 	int		pipe_fd[2];
 	int		error;
+	int		absolut_path;
 	char	**cmds;
 	char	**path_list;
 	char	*path_to_access;

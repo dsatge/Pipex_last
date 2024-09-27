@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:49:53 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/26 23:33:07 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/27 18:51:07 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	init_files(char *infile, char *outfile, t_pipe *pipex)
 	int	file1;
 	int	file2;
 
-	file1 = 0;
-	file2 = 0;
 	file1 = open(infile, O_RDONLY);
 	file2 = open(outfile, O_RDONLY);
 	if (file1 < 0)
@@ -37,6 +35,8 @@ void	init_files(char *infile, char *outfile, t_pipe *pipex)
 			perror("outfile permission");
 		pipex->error = 1;
 	}
+	close(file1);
+	close(file2);
 }
 
 void	check_args(int argc, char **argv, char **env, t_pipe *pipex)
@@ -53,6 +53,7 @@ void	check_args(int argc, char **argv, char **env, t_pipe *pipex)
 		pipex->env = env;
 	pipex->path_to_access = NULL;
 	pipex->cmds = NULL;
+	pipex->path_list = NULL;
 	pipex->error = 0;
 	pipex->file_1 = argv[1];
 	init_files(argv[1], argv[argc - 1], pipex);
@@ -65,7 +66,6 @@ void	find_path(char **env, t_pipe *pipex)
 	char	*path;
 
 	path = NULL;
-	pipex->path_list = NULL;
 	if (env[0] == NULL)
 	{
 		pipex->line_path = 0;
@@ -77,6 +77,8 @@ void	find_path(char **env, t_pipe *pipex)
 		line++;
 	if (ft_strncmp(env[line], "PATH=", 5) != 0)
 	{
+		if (pipex->absolut_path == 0)
+			return ;
 		exit(0);
 	}
 	path = ft_strtrim(env[line], "PATH=");
