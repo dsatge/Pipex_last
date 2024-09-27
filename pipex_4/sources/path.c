@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:49:53 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/27 18:51:07 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/27 19:34:45 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,22 @@ void	check_args(int argc, char **argv, char **env, t_pipe *pipex)
 		exit(EXIT_FAILURE);
 	}
 	if (env[0] == NULL)
+	{
+		pipex->absolut_path = 3;
 		env_check(argv, pipex);
+	}
 	else
 		pipex->env = env;
 	pipex->path_to_access = NULL;
 	pipex->cmds = NULL;
 	pipex->path_list = NULL;
 	pipex->error = 0;
+	pipex->absolut_path = 3;
 	pipex->file_1 = argv[1];
 	init_files(argv[1], argv[argc - 1], pipex);
 }
 
-void	find_path(char **env, t_pipe *pipex)
+void	find_path(char **env, t_pipe *pipex, char **argv)
 {
 	int		line_env;
 	int		line;
@@ -77,7 +81,7 @@ void	find_path(char **env, t_pipe *pipex)
 		line++;
 	if (ft_strncmp(env[line], "PATH=", 5) != 0)
 	{
-		if (pipex->absolut_path == 0)
+		if (env_check(argv, pipex), pipex->absolut_path == 0)
 			return ;
 		exit(0);
 	}
@@ -101,12 +105,12 @@ char	**add_path(t_pipe *pipe, char *add, int len)
 		if (!new[line])
 		{
 			perror("path creation");
-			ft_freetab(new, len);
+			ft_freetab(new);
 			clean_to_exit(2, *pipe);
 		}
 		line++;
 	}
-	ft_freetab(pipe->path_list, len);
+	ft_freetab(pipe->path_list);
 	new[line] = 0;
 	return (new);
 }

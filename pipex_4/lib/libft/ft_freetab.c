@@ -6,18 +6,18 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 15:06:08 by dsatge            #+#    #+#             */
-/*   Updated: 2024/07/09 14:49:40 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/27 19:23:38 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_freetab(char **tab, size_t tab_len)
+void	ft_freetab(char **tab)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < tab_len)
+	while (tab[i])
 	{
 		free(tab[i]);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:50:40 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/27 18:41:27 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/27 19:30:19 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,14 @@ void	exe_last_cmd(char **argv, char *file2, t_pipe pipex, int num_cmd)
 
 void	clean_to_exit(int level_clean, t_pipe pipex)
 {
-	if (level_clean >= 0)
+	if (level_clean >= 0 && pipex.absolut_path == 3)
 	{
-		ft_freetab(pipex.path_list, pipex.line_path);
+		ft_freetab(pipex.path_list);
 	}
 	if (level_clean >= 1)
 	{
 		if (pipex.cmds)
-			ft_freetab(pipex.cmds, ft_count_line_split(pipex.cmds));
+			ft_freetab(pipex.cmds);
 		if (pipex.path_to_access)
 			free(pipex.path_to_access);
 	}

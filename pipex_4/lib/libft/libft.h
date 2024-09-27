@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 16:24:04 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/03 14:32:38 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/27 19:24:07 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_bzero(void *s, size_t n);
 int		ft_atoi(const char *nptr);
 long	ft_atol(const char *nptr);
 void	*ft_calloc(size_t nmemb, size_t size);
-void	ft_freetab(char **tab, size_t tab_len);
+void	ft_freetab(char **tab);
 size_t	ft_count_line_split(char **split);
 char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);

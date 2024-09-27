@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/26 23:51:35 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/26 23:51:48 by dsatge           ###   ########.fr       */
+/*   Created: 2024/09/27 19:32:23 by dsatge            #+#    #+#             */
+/*   Updated: 2024/09/27 19:36:51 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ int	main(int argc, char **argv, char **env)
 	t_pipe	pipex;
 	pid_t	pid;
 
+	env[0] = NULL;
 	check_args(argc, argv, env, &pipex);
-	find_path(env, &pipex);
+	find_path(env, &pipex, argv);
 	pipe_creat(&pipex);
 	pid = fork();
 	if (pid == -1)
@@ -31,7 +32,7 @@ int	main(int argc, char **argv, char **env)
 	pid = fork();
 	if (pid == 0)
 		exe_last_cmd(argv, argv[argc - 1], pipex, 3);
-    ft_close_pipe(&pipex);
+	ft_close_pipe(&pipex);
 	wait(NULL);
 	wait(NULL);
 	if (pipex.error == 1)

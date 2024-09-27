@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 09:21:11 by dsatge            #+#    #+#             */
-/*   Updated: 2024/08/26 18:17:41 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/27 19:22:54 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	tab = malloc((sizeof(char *)) * (wordcount(s, c) + 1));
+	tab = ft_calloc((sizeof(char *)), (wordcount(s, c) + 1));
 	if (!tab)
 		return (NULL);
 	write_word(s, c, tab);
