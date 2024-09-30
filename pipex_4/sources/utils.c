@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 17:54:57 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/30 18:14:04 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/30 19:24:12 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,6 @@ void	ft_close_pipe(t_pipe *pipex)
 	close(pipex->pipe_fd[1]);
 }
 
-void	clean_to_exit(int level_clean, t_pipe pipex)
-{
-	if (level_clean >= 0 && pipex.absolut_path != -1)
-	{
-		ft_freetab(pipex.path_list);
-	}
-	if (level_clean >= 1)
-	{
-		if (pipex.cmds)
-			ft_freetab(pipex.cmds);
-		if (pipex.path_to_access)
-			free(pipex.path_to_access);
-	}
-	if (level_clean >= 2 && level_clean != 404)
-	{
-		exit(EXIT_FAILURE);
-	}
-	if (level_clean == 404)
-	{
-		ft_putstr_fd("command not found\n", 2);
-		exit(127);
-	}
-}
-
 void	check_fork(t_pipe *pipex)
 {
 	perror("fork:");
@@ -61,4 +37,29 @@ void	if_perror(t_pipe *pipex)
 {
 	perror("error read:");
 	pipex->error = 1;
+}
+
+int	invert_inout(t_pipe *pipex, int exe_cmd, int fd)
+{
+	if (exe_cmd == 0)
+	{
+		if (fd == -1)
+			return (if_perror(pipex), -1);
+		if (dup2(fd, STDIN_FILENO) == -1)
+			return (-1);
+		if (dup2(pipex->pipe_fd[1], STDOUT_FILENO) == -1)
+			return (-1);
+	}
+	else
+	{
+		if (fd == -1)
+			return (if_perror(pipex), -1);
+		if (dup2(fd, STDOUT_FILENO) == -1)
+			return (-1);
+		if (dup2(pipex->pipe_fd[0], STDIN_FILENO) == -1)
+			return (-1);
+	}
+	ft_close_pipe(pipex);
+	close(fd);
+	return (0);
 }

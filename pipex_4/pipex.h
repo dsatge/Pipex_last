@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:51:26 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/30 18:13:48 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/30 19:25:34 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	pipe_creat(t_pipe *pipex);
 void	ft_close_pipe(t_pipe *pipex);
 void	check_fork(t_pipe *pipex);
 void	if_perror(t_pipe *pipex);
+int		invert_inout(t_pipe *pipex, int exe_cmd, int fd);
 //PATH
 void	check_files(char *infile, char *outfile, t_pipe *pipex);
 void	check_args(int argc, char **argv, char **env, t_pipe *pipex);
