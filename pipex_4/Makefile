@@ -6,7 +6,7 @@
 #    By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/26 20:51:59 by dsatge            #+#    #+#              #
-#    Updated: 2024/09/26 20:52:10 by dsatge           ###   ########.fr        #
+#    Updated: 2024/09/30 17:57:02 by dsatge           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ FILES = main.c
 
 SRC_FILES = valid_input.c\
 	path.c\
+	utils.c\
 
 FLAGS = -Wall -Wextra -Werror -I includes/ -g
 

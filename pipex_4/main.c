@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 19:32:23 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/30 17:51:54 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/30 18:16:52 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,14 @@ int	main(int argc, char **argv, char **env)
 	pipe_creat(&pipex);
 	pid = fork();
 	if (pid == -1)
-	{
-		perror("fork");
-		clean_to_exit(0, pipex);
-	}
+		check_fork(&pipex);
 	if (pid == 0)
-	{
 		exe_cmd(argv, pipex, 2);
-	}
 	pid = fork();
+	if (pid == -1)
+		check_fork(&pipex);
 	if (pid == 0)
-	{
 		exe_last_cmd(argv, argv[argc - 1], pipex, 3);
-	}
 	ft_close_pipe(&pipex);
 	wait(NULL);
 	wait(NULL);

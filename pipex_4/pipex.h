@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:51:26 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/30 15:58:26 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/30 18:13:48 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,18 @@ typedef struct s_pipe
 	char	*file_1;
 }	t_pipe;
 
-//MAIN
+//UTILS
+void	pipe_creat(t_pipe *pipex);
+void	ft_close_pipe(t_pipe *pipex);
+void	check_fork(t_pipe *pipex);
+void	if_perror(t_pipe *pipex);
 //PATH
-void	init_files(char *infile, char *outfile, t_pipe *pipex);
+void	check_files(char *infile, char *outfile, t_pipe *pipex);
 void	check_args(int argc, char **argv, char **env, t_pipe *pipex);
 void	find_path(char **env, t_pipe *pipe, char **argv);
 char	**add_path(t_pipe *pipe, char *add, int len);
-void	ft_close_pipe(t_pipe *pipex);
 //VALID_INPUT
 void	env_check(char **argv, t_pipe *pipex);
-void	pipe_creat(t_pipe *pipex);
 void	exe_cmd(char **argv, t_pipe pipex, int num_cmd);
 void	exe_last_cmd(char **argv, char *file2, t_pipe pipex, int num_cmd);
 void	clean_to_exit(int level_clean, t_pipe pipex);

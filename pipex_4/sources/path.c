@@ -6,13 +6,13 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:49:53 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/30 17:45:54 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/30 18:06:41 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
-void	init_files(char *infile, char *outfile, t_pipe *pipex)
+void	check_files(char *infile, char *outfile, t_pipe *pipex)
 {
 	if (access(infile, F_OK) != 0)
 	{
@@ -56,7 +56,7 @@ void	check_args(int argc, char **argv, char **env, t_pipe *pipex)
 	pipex->path_list = NULL;
 	pipex->error = 0;
 	pipex->file_1 = argv[1];
-	init_files(argv[1], argv[argc - 1], pipex);
+	check_files(argv[1], argv[argc - 1], pipex);
 }
 
 void	find_path(char **env, t_pipe *pipex, char **argv)
@@ -109,10 +109,4 @@ char	**add_path(t_pipe *pipe, char *add, int len)
 	ft_freetab(pipe->path_list);
 	new[line] = 0;
 	return (new);
-}
-
-void	ft_close_pipe(t_pipe *pipex)
-{
-	close(pipex->pipe_fd[0]);
-	close(pipex->pipe_fd[1]);
 }
