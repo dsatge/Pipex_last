@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 19:32:23 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/30 14:47:59 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/30 14:54:45 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int argc, char **argv, char **env)
 	pid_t	pid;
 
 	check_args(argc, argv, env, &pipex);
-	find_path(env, &pipex);
+	find_path(env, &pipex, argv);
 	pipe_creat(&pipex);
 	pid = fork();
 	if (pid == -1)

@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:49:53 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/30 14:39:21 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/30 14:54:35 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	check_args(int argc, char **argv, char **env, t_pipe *pipex)
 	init_files(argv[1], argv[argc - 1], pipex);
 }
 
-void	find_path(char **env, t_pipe *pipex)
+void	find_path(char **env, t_pipe *pipex, char **argv)
 {
 	int		line_env;
 	int		line;
@@ -80,9 +80,9 @@ void	find_path(char **env, t_pipe *pipex)
 		line++;
 	if (ft_strncmp(env[line], "PATH=", 5) != 0)
 	{
-		if (pipex->absolut_path == -1)
-			return ;
-		exit(0);
+		pipex->absolut_path = -1;
+		env_check(argv, pipex);
+		return ;
 	}
 	path = ft_strtrim(env[line], "PATH=");
 	pipex->path_list = ft_split(path, ':');
