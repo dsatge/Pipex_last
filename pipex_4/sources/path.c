@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:49:53 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/30 14:54:35 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/30 17:45:54 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,25 @@
 
 void	init_files(char *infile, char *outfile, t_pipe *pipex)
 {
-	int	file1;
-	int	file2;
-
-	file1 = open(infile, O_RDONLY);
-	file2 = open(outfile, O_RDONLY);
-	if (file1 < 0)
+	if (access(infile, F_OK) != 0)
 	{
-		if (access(infile, F_OK) != 0)
-			perror("infile access");
-		else if (access(infile, R_OK | W_OK) != 0)
-			perror("infile permission");
+		perror("infile access");
 		pipex->error = 1;
 	}
-	if (file2 < 0 || pipex->error == 1)
+	else if (access(infile, R_OK | W_OK) != 0)
 	{
-		if (access(outfile, F_OK) != 0 && pipex->error == 0)
-			return ;
-		else if (access(outfile, R_OK | W_OK) != 0)
-			perror("outfile permission");
+		perror("infile permission");
 		pipex->error = 1;
 	}
-	close(file1);
-	close(file2);
+	if (access(outfile, F_OK) != 0 && pipex->error == 0)
+	{
+		return ;
+	}
+	else if (access(outfile, R_OK | W_OK) != 0)
+	{
+		perror("outfile permission");
+		pipex->error = 1;
+	}
 }
 
 void	check_args(int argc, char **argv, char **env, t_pipe *pipex)
@@ -47,6 +43,7 @@ void	check_args(int argc, char **argv, char **env, t_pipe *pipex)
 			pipex\n", 2);
 		exit(EXIT_FAILURE);
 	}
+	pipex->absolut_path = 0;
 	if (env[0] == NULL)
 	{
 		pipex->absolut_path = -1;

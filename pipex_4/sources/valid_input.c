@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:50:40 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/30 14:46:59 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/30 17:51:18 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ void	exe_cmd(char **argv, t_pipe pipex, int num_cmd)
 
 	i = -1;
 	fd = open(pipex.file_1, O_RDONLY);
+	if (fd == -1)
+	{
+		perror("error read:");
+		pipex.error = 1;
+		return ;
+	}
 	if (dup2(fd, STDIN_FILENO) == -1)
 		return ;
 	if (dup2(pipex.pipe_fd[1], STDOUT_FILENO) == -1)
@@ -55,10 +61,11 @@ void	exe_cmd(char **argv, t_pipe pipex, int num_cmd)
 	ft_close_pipe(&pipex);
 	close(fd);
 	pipex.cmds = ft_split(argv[num_cmd], ' ');
-	if (access(pipex.cmds[0], F_OK | X_OK) == 0
+	if (pipex.cmds[0] != NULL && access(pipex.cmds[0], F_OK | X_OK) == 0
 		&& execve(pipex.cmds[0], pipex.cmds, pipex.env) == -1)
 		return (clean_to_exit(404, pipex), perror("exe_cmd:"));
-	while (++i < pipex.line_path && pipex.absolut_path != -1)
+	while (++i < pipex.line_path && pipex.absolut_path != -1
+		&& pipex.cmds[0] != NULL)
 	{
 		free(pipex.path_to_access);
 		pipex.path_to_access = ft_strjoin(pipex.path_list[i], pipex.cmds[0]);
@@ -75,18 +82,32 @@ void	exe_last_cmd(char **argv, char *file2, t_pipe pipex, int num_cmd)
 	int		output_fd;
 
 	i = -1;
-	output_fd = open(file2, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	output_fd = open(file2, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (output_fd == -1)
+	{
+		perror("error read:");
+		pipex.error = 1;
+		return ;
+	}
 	if (dup2(output_fd, STDOUT_FILENO) == -1)
+	{
+		close(output_fd);
 		return ;
+	}
+	close(output_fd);
 	if (dup2(pipex.pipe_fd[0], STDIN_FILENO) == -1)
+	{
+		close(output_fd);
 		return ;
+	}
 	ft_close_pipe(&pipex);
 	close(output_fd);
 	pipex.cmds = ft_split(argv[num_cmd], ' ');
-	if (access(pipex.cmds[0], F_OK | X_OK) == 0
+	if (pipex.cmds[0] != NULL && access(pipex.cmds[0], F_OK | X_OK) == 0
 		&& execve(pipex.cmds[0], pipex.cmds, pipex.env) == -1)
 		return (clean_to_exit(404, pipex), perror("exe_last_cmd:"));
-	while (++i < pipex.line_path)
+	while (++i < pipex.line_path && pipex.absolut_path != -1
+		&& pipex.cmds[0] != NULL)
 	{
 		free(pipex.path_to_access);
 		pipex.path_to_access = ft_strjoin(pipex.path_list[i], pipex.cmds[0]);
@@ -116,7 +137,6 @@ void	clean_to_exit(int level_clean, t_pipe pipex)
 	}
 	if (level_clean == 404)
 	{
-		pipex.error = 1;
 		ft_putstr_fd("command not found\n", 2);
 		exit(127);
 	}
