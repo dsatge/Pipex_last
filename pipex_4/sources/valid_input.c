@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:50:40 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/30 19:25:02 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/30 19:43:16 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	env_check(char **argv, t_pipe *pipex)
 		perror("pipex: env_check");
 	}
 	if (err == 2)
-		exit(EXIT_FAILURE);
+		exit(127);
 	pipex->env = NULL;
 }
 
@@ -52,7 +52,7 @@ void	exe_cmd(char **argv, t_pipe pipex, int num_cmd)
 		pipex.path_to_access = ft_strjoin(pipex.path_list[i], pipex.cmds[0]);
 		if (access(pipex.path_to_access, F_OK | X_OK) == 0
 			&& execve(pipex.path_to_access, pipex.cmds, pipex.env) == -1)
-			return (pipex.error = 1, perror("exe_cmd:"));
+			return (exit(127), perror("exe_cmd:"));
 	}
 	return (clean_to_exit(404, pipex), perror("exe_cmd:"));
 }
@@ -77,7 +77,7 @@ void	exe_last_cmd(char **argv, char *file2, t_pipe pipex, int num_cmd)
 		pipex.path_to_access = ft_strjoin(pipex.path_list[i], pipex.cmds[0]);
 		if (access(pipex.path_to_access, F_OK | X_OK) == 0
 			&& execve(pipex.path_to_access, pipex.cmds, pipex.env) == -1)
-			return (pipex.error = 1, perror("exe_last_cmd:"));
+			return (exit(127), perror("exe_last_cmd:"));
 	}
 	return (clean_to_exit(404, pipex), perror("exe_last_cmd:"));
 }
