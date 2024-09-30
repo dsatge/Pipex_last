@@ -6,7 +6,7 @@
 /*   By: dsatge <dsatge@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 20:51:26 by dsatge            #+#    #+#             */
-/*   Updated: 2024/09/27 19:09:17 by dsatge           ###   ########.fr       */
+/*   Updated: 2024/09/30 14:39:37 by dsatge           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef struct s_pipe
 //PATH
 void	init_files(char *infile, char *outfile, t_pipe *pipex);
 void	check_args(int argc, char **argv, char **env, t_pipe *pipex);
-void	find_path(char **env, t_pipe *pipe , char **argv);
+void	find_path(char **env, t_pipe *pipe);
 char	**add_path(t_pipe *pipe, char *add, int len);
 void	ft_close_pipe(t_pipe *pipex);
 //VALID_INPUT
